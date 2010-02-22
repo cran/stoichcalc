@@ -6,7 +6,7 @@ Calculate stoichiometric coefficients of a process from involved substances,
 their composition and constraints
 }
 \usage{
-calc.stoich.coef(alpha, name, subst, subst.norm, nu.norm = 1, constraints = list())
+calc.stoich.coef(alpha, name, subst, subst.norm, nu.norm = 1, constraints = list(), eps = 1e-5)
 }
 \arguments{
   \item{alpha}{
@@ -35,7 +35,10 @@ Each stoichiometric constraint must be stored as a vector containing the
 coefficients of the linear equation in elementary constituents that defines
 the constraint.
 The elements of this vector must be labelled by the names of the corresponding
-elementary constituents.
+elementary constituents.}
+  \item{eps}{
+relative tolerance for checking ratios of stoichiometric coefficients 
+(only used for informing user about substance pairs with fixed stoichiometric ratio)
 }
 }
 \details{
@@ -53,7 +56,7 @@ comprehensive stoichiometric matrix), the column names are equal to the
 substance names provided by the substance composition matrix alpha.
 }
 \references{
-Reichert, P. and Schuwirt, N.,
+Reichert, P. and Schuwirth, N.,
 A generic framework for deriving process stoichiometry in environmental models,
 Environmental Modelling and Software, in review, 2010.
 }
@@ -71,7 +74,7 @@ subst.comp <-
                 charge = 1/14),   # chu/gNH4-N
        NO3  = c(O      = 3*16/14, # gO/gNO3-N
                 N      = 1,       # gN/gNO3-N
-                charge = 1/14),   # chu/gNO3-N
+                charge = -1/14),  # chu/gNO3-N
        HPO4 = c(O      = 4*16/31, # gO/gHPO4-P
                 H      = 1*1/31,  # gH/gHPO4-P
                 P      = 1,       # gP/gHPO4-P

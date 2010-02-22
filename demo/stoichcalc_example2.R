@@ -2,11 +2,11 @@
 # STOICHCALC - R-Routines for Solving Stoichiometric Equations
 # ==============================================================================
 #
-# Example corresponding to section 5.2 of the paper cited below       08.02.2010
-# =============================================================
+# Realistic example                                                   22.02.2010
+# =================
 #
 # Literature: Peter Reichert and Nele Schuwirth
-#             A generic framework for deriving process stoichiometry
+#             A generic framework for deriving process stoichiometry 
 #             in environmental models
 #             submitted to Environmental Modelling and Software
 #
@@ -16,7 +16,7 @@
 # Load library functions:
 # =======================
 
-library("stoichcalc")
+source("stoichcalc.r")
 
 
 # Define composition:
@@ -44,16 +44,16 @@ param <- list(alpha.O.ALG     = 0.50,         # gO/gALG
               Y.ZOO           = 0.2,          # gZOO/gALG
               f.DOM           = 0.1,          # gDOM/gALG
               f.POM           = 0.2)          # gPOM/gALG
-
+            
 # calculate carbon fractions to guarantee that the fractions sum to unity:
 
-param$alpha.C.ALG <- 1 - (param$alpha.O.ALG + param$alpha.H.ALG +
+param$alpha.C.ALG <- 1 - (param$alpha.O.ALG + param$alpha.H.ALG + 
                           param$alpha.N.ALG + param$alpha.P.ALG)
-param$alpha.C.ZOO <- 1 - (param$alpha.O.ZOO + param$alpha.H.ZOO +
+param$alpha.C.ZOO <- 1 - (param$alpha.O.ZOO + param$alpha.H.ZOO + 
                           param$alpha.N.ZOO + param$alpha.P.ZOO)
-param$alpha.C.POM <- 1 - (param$alpha.O.POM + param$alpha.H.POM +
+param$alpha.C.POM <- 1 - (param$alpha.O.POM + param$alpha.H.POM + 
                           param$alpha.N.POM + param$alpha.P.POM)
-param$alpha.C.DOM <- 1 - (param$alpha.O.DOM + param$alpha.H.DOM +
+param$alpha.C.DOM <- 1 - (param$alpha.O.DOM + param$alpha.H.DOM + 
                           param$alpha.N.DOM + param$alpha.P.DOM)
 
 
@@ -65,7 +65,7 @@ NH4    <- c(H      = 4*1/14,              # gH/gNH4-N
             charge = 1/14)                # chargeunits/gNH4-N
 NO3    <- c(O      = 3*16/14,             # gO/gNO3-N
             N      = 1,                   # gN/gNO3-N
-            charge = 1/14)                # chargeunits/gNO3-N
+            charge = -1/14)               # chargeunits/gNO3-N
 HPO4   <- c(O      = 4*16/31,             # gO/gHPO4-P
             H      = 1*1/31,              # gH/gHPO4-P
             P      = 1,                   # gP/gHPO4-P
@@ -119,23 +119,23 @@ subst.comp <- list(NH4  = NH4,
 
 # compile and print composition matrix:
 # -------------------------------------
-
+ 
 alpha <- calc.comp.matrix(subst.comp)
 
-print(alpha,digits=2)
+print(alpha)
 
 nu.basis <- calc.stoich.basis(alpha)
 
-print(nu.basis,digits=2)
+print(nu.basis)
 
 #test
-print(nu.basis %*% t(alpha),digits=2)
+nu.basis %*% t(alpha)
 
 
 # Derivation of Process Stoichiometry:
 # ====================================
 
-# test of error messages for growth of zooplankton:
+# test of error messages for growth of zooplankton: 
 # -------------------------------------------------
 
 # substances/organisms relevant for growth of zooplankton:
@@ -146,21 +146,21 @@ subst.gro.ZOO <- c("NH4","HPO4","HCO3","O2","H","H2O","ALG","ZOO","POM","DOM")
 
 basis.gro.ZOO <- calc.stoich.basis(alpha       = alpha,
                                    subst       = subst.gro.ZOO)
-
+                                   
 nu.gro.ZOO    <- calc.stoich.coef (alpha       = alpha,
                                    name        = "gro.ZOO",
                                    subst       = subst.gro.ZOO,
                                    subst.norm  = "ZOO",
                                    nu.norm     = 1)
-
+                                
 # insufficient number of constraints:
 
-const.gro.ZOO <- list(c("ZOO" = 1,"ALG" = param$Y.ZOO))
+const.gro.ZOO <- list(c("ZOO" = 1,"ALG" = param$Y.ZOO)) 
 
 basis.gro.ZOO <- calc.stoich.basis(alpha       = alpha,
                                    subst       = subst.gro.ZOO,
                                    constraints = const.gro.ZOO)
-
+                           
 nu.gro.ZOO    <- calc.stoich.coef (alpha       = alpha,
                                    name        = "gro.ZOO",
                                    subst       = subst.gro.ZOO,
@@ -168,16 +168,16 @@ nu.gro.ZOO    <- calc.stoich.coef (alpha       = alpha,
                                    nu.norm     = 1,
                                    constraints = const.gro.ZOO)
 
-# wrong substance name for normalization:
+# wrong substance name for normalization: 
 
 const.gro.ZOO <- list(c("ZOO" = 1,"ALG" = param$Y.ZOO),
                       c("POM" = 1,"ALG" = param$f.POM),
-                      c("DOM" = 1,"ALG" = param$f.DOM))
+                      c("DOM" = 1,"ALG" = param$f.DOM)) 
 
 basis.gro.ZOO <- calc.stoich.basis(alpha       = alpha,
                                    subst       = subst.gro.ZOO,
                                    constraints = const.gro.ZOO)
-
+                           
 nu.gro.ZOO    <- calc.stoich.coef (alpha       = alpha,
                                    name        = "gro.ZOO",
                                    subst       = subst.gro.ZOO,
@@ -185,24 +185,24 @@ nu.gro.ZOO    <- calc.stoich.coef (alpha       = alpha,
                                    nu.norm     = 1,
                                    constraints = constraints)
 
-# good process definition
+# good process definition 
 
 const.gro.ZOO <- list(c("ZOO" = 1,"ALG" = param$Y.ZOO),
                       c("POM" = 1,"ALG" = param$f.POM),
-                      c("DOM" = 1,"ALG" = param$f.DOM))
+                      c("DOM" = 1,"ALG" = param$f.DOM)) 
 
 basis.gro.ZOO <- calc.stoich.basis(alpha       = alpha,
                                    subst       = subst.gro.ZOO,
                                    constraints = const.gro.ZOO)
-
+                           
 nu.gro.ZOO    <- calc.stoich.coef (alpha       = alpha,
                                    name        = "gro.ZOO",
                                    subst       = subst.gro.ZOO,
                                    subst.norm  = "ZOO",
                                    nu.norm     = 1,
                                    constraints = const.gro.ZOO)
-
-print(nu.gro.ZOO,digits=2)
+                                   
+print(nu.gro.ZOO)
 
 # demonstration that stoichiometric coefficient of PO4 becomes negative
 # if the P content of phytoplankton is too low:
@@ -212,7 +212,7 @@ alpha.test["P","ALG"] <- 0.004
 
 const.gro.ZOO <- list(c("ZOO" = 1,"ALG" = param$Y.ZOO),
                       c("POM" = 1,"ALG" = param$f.POM),
-                      c("DOM" = 1,"ALG" = param$f.DOM))
+                      c("DOM" = 1,"ALG" = param$f.DOM)) 
 
 nu.gro.ZOO    <- calc.stoich.coef (alpha       = alpha.test,
                                    name        = "gro.ZOO",
@@ -221,13 +221,13 @@ nu.gro.ZOO    <- calc.stoich.coef (alpha       = alpha.test,
                                    nu.norm     = 1,
                                    constraints = const.gro.ZOO)
 
-print(nu.gro.ZOO,digits=2)
+print(nu.gro.ZOO)
 
 # this can be dorrected by making the yield smaller:
 
 const.gro.ZOO <- list(c("ZOO" = 1,"ALG" = param$Y.ZOO/2),
                       c("POM" = 1,"ALG" = param$f.POM),
-                      c("DOM" = 1,"ALG" = param$f.DOM))
+                      c("DOM" = 1,"ALG" = param$f.DOM)) 
 
 nu.gro.ZOO    <- calc.stoich.coef (alpha       = alpha.test,
                                    name        = "gro.ZOO",
@@ -236,9 +236,9 @@ nu.gro.ZOO    <- calc.stoich.coef (alpha       = alpha.test,
                                    nu.norm     = 1,
                                    constraints = const.gro.ZOO)
 
-print(nu.gro.ZOO,digits=2)
+print(nu.gro.ZOO)
 
-# calculating stoichiometric matrix:
+# calculating stoichiometric matrix: 
 # ----------------------------------
 
 # growth of zooplankton:
@@ -247,7 +247,7 @@ subst.gro.ZOO <- c("NH4","HPO4","HCO3","O2","H","H2O","ALG","ZOO","POM","DOM")
 
 const.gro.ZOO <- list(c("ZOO" = 1,"ALG" = param$Y.ZOO),
                       c("POM" = 1,"ALG" = param$f.POM),
-                      c("DOM" = 1,"ALG" = param$f.DOM))
+                      c("DOM" = 1,"ALG" = param$f.DOM)) 
 
 nu.gro.ZOO    <- calc.stoich.coef(alpha       = alpha,
                                   name        = "gro.ZOO",
@@ -278,7 +278,7 @@ const.death.ZOO <- list(c("ZOO" = min(param$alpha.N.ZOO/param$alpha.N.POM,
                # death; if the P or N content of POM is larger than of ZOO
                # part of the body mass is mineralized
                # care must still be taken regarding potential oxygen consum
-
+               
 nu.death.ZOO    <- calc.stoich.coef(alpha       = alpha,
                                     name        = "death.ZOO",
                                     subst       = subst.death.ZOO,
@@ -335,7 +335,7 @@ nu.death.ALG    <- calc.stoich.coef(alpha       = alpha,
                                     subst.norm  = "ALG",
                                     nu.norm     = -1,
                                     constraints = const.death.ALG)
-
+                                 
 # hydrolysis:
 
 subst.hydrolysis <- c("NH4","HPO4","HCO3","O2","H","H2O","POM","DOM")
@@ -354,7 +354,7 @@ nu.hydrol <- calc.stoich.coef(alpha       = alpha,
                               subst.norm  = "POM",
                               nu.norm     = -1,
                               constraints = const.hydrol)
-
+                                 
 # oxic mineralization of dissolved organic matter:
 
 subst.miner.ox <- c("NH4","HPO4","HCO3","O2","H","H2O","DOM")
@@ -391,4 +391,11 @@ nu <- rbind(nu.gro.ALG.NH4,
             nu.nitri)
 
 print(nu,digits=2)
+
+
+# write composition matrix and stoichiometric matrix to files:
+# ============================================================
+
+write.table(alpha,file="stoichcalc_11_exercise2_alpha.dat",sep="\t",col.names=NA)
+write.table(nu,file="stoichcalc_11_exercise2_nu.dat",sep="\t",col.names=NA)
 

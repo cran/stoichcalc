@@ -2,7 +2,7 @@
 # STOICHCALC - R-Routines for Solving Stoichiometric Equations
 # ==============================================================================
 #
-# Example corresponding to section 5.1 of the paper cited below       08.02.2010
+# Example corresponding to section 5.1 of the paper cited below       22.02.2010
 # =============================================================
 #
 # Literature: Peter Reichert and Nele Schuwirth

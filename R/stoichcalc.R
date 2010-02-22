@@ -2,7 +2,7 @@
 # STOICHCALC - R-Routines for Solving Stoichiometric Equations
 # ==============================================================================
 #
-# Version 1.1-0                Peter Reichert, Feb. 08, 2010 (reichert@eawag.ch)
+# Version 1.1-1                Peter Reichert, Feb. 22, 2010 (reichert@eawag.ch)
 # =============
 #
 # Literature: Peter Reichert and Nele Schuwirth
@@ -117,7 +117,7 @@ calc.comp.matrix <- function(subst.comp)
 # Usage
 # -----
 
-# calc.stoich.basis(alpha,subst=NA,constraints=list())
+# calc.stoich.basis(alpha,subst=NA,constraints=list(),eps=1e-5)
 
 # Arguments
 # ---------
@@ -133,6 +133,9 @@ calc.comp.matrix <- function(subst.comp)
 #              of the linear equation in "elementary constituents" that defines
 #              the constraint. The elements of this vector must be labelled
 #              by the names of the corresponding "elementary constituents".
+# eps          relative tolerance for checking ratios of stoichiometric
+#              coefficients (only used for informing user about substance pairs
+#              with fixed stoichiometric ratio)
 
 # Details
 # -------
@@ -151,7 +154,7 @@ calc.comp.matrix <- function(subst.comp)
 # space.
 
 
-calc.stoich.basis <- function(alpha,subst=NA,constraints=list())
+calc.stoich.basis <- function(alpha,subst=NA,constraints=list(),eps=1e-5)
 {
    # calculate reduced composition matrix:
    
@@ -212,28 +215,84 @@ calc.stoich.basis <- function(alpha,subst=NA,constraints=list())
    d  <- svd.res$d
    d.max <- max(d)
    fact  <- 1e-10
-   res <- matrix(nrow=0,ncol=ncol(ut))
-   colnames(res) <- colnames(alpha.reduced)
+   basis.reduced <- matrix(nrow=0,ncol=ncol(ut))
+   colnames(basis.reduced) <- colnames(alpha.reduced)
    for ( i in 1:length(d) )
    {
       if ( d[i] < fact*d.max )
       {
-         res <- rbind(res,ut[i,])
+         basis.reduced <- rbind(basis.reduced,ut[i,])
       }
    }
    
    # extend to original dimension and order of composition matrix:
    
-   basis <- matrix(0,nrow=nrow(res),ncol=ncol(alpha))
+   basis <- matrix(0,nrow=nrow(basis.reduced),ncol=ncol(alpha))
    colnames(basis) <- colnames(alpha)
-   basis[,colnames(res)] <- res 
+   basis[,colnames(basis.reduced)] <- basis.reduced 
    
-   # print summary and return extracted basis:
+   # print summary and analyze structure of stoichiometric space:
 
-   print(paste("Number of substances:             ",ncol(alpha.reduced)))
-   print(paste("Number of elementary constituents:",nrow(alpha.reduced)))
-   print(paste("Number of constraints:            ",length(constraints)))   
-   print(paste("Number of independent processes:  ",nrow(basis)))
+   dim <- nrow(basis.reduced)   
+   print(paste("Number of substances:                     ",ncol(alpha.reduced)))
+   print(paste("Number of elementary constituents:        ",nrow(alpha.reduced)))
+   print(paste("Number of constraints:                    ",length(constraints)))   
+   print(paste("Number of independent processes:          ",dim))
+   if ( dim > 1 )
+   {
+      print(paste("Number of required additional constraints:",dim-1))
+   }
+   if ( dim > 1 )
+   {
+      nfixed <- 0
+      nsubst <- ncol(basis.reduced)
+      ratios.fixed <- matrix("",ncol=nsubst,nrow=nsubst)
+      colnames(ratios.fixed) <- colnames(basis.reduced)
+      rownames(ratios.fixed) <- colnames(basis.reduced)
+      for ( i in 1:nsubst )
+      {
+         if ( i < nsubst )
+         {
+            for ( j in (i+1):nsubst )
+            {
+               i1 <- i
+               i2 <- j
+               if ( basis.reduced[1,i] > basis.reduced[1,j] )
+               {
+                  i1 <- j
+                  i2 <- i
+               }
+               ratio.1 <- basis.reduced[1,i1]/basis.reduced[1,i2]
+               approx.equal <- TRUE
+               for ( k in 2:nrow(basis.reduced) )
+               {
+                  ratio.k <- basis.reduced[k,i1]/basis.reduced[k,i2]
+                  if ( ratio.1*ratio.k < 0 |
+                       abs(ratio.k) > (1+eps)*abs(ratio.1) |
+                       abs(ratio.k) < (1-eps)*abs(ratio.1) )
+                  {
+                     approx.equal <- FALSE
+                     break
+                  }
+               }
+               if ( approx.equal )
+               {
+                  nfixed <- nfixed + 1
+                  ratios.fixed[i,j] <- "x"
+                  ratios.fixed[j,i] <- "x"
+               }
+            }
+         }
+      }
+      if ( nfixed > 0 )
+      {
+         print("Ratios are fixed between the following substance pairs:")
+         print(ratios.fixed,quote=FALSE)
+      }
+   }
+   
+   # return basis:
+
    return(basis)
 }
 
@@ -252,7 +311,8 @@ calc.stoich.basis <- function(alpha,subst=NA,constraints=list())
 # Usage
 # -----
 
-# calc.stoich.coef(alpha,name,subst,subst.norm,nu.norm=1,constraints=list())
+# calc.stoich.coef(alpha,name,subst,subst.norm,nu.norm=1,constraints=list(),
+#                   eps=1e-5)
 
 # Arguments
 # ---------
@@ -273,6 +333,9 @@ calc.stoich.basis <- function(alpha,subst=NA,constraints=list())
 #              of the linear equation in "elementary constituents" that defines
 #              the constraint. The elements of this vector must be labelled
 #              by the names of the corresponding "elementary constituents".
+# eps          relative tolerance for checking ratios of stoichiometric
+#              coefficients (only used for informing user about substance pairs
+#              with fixed stoichiometric ratio)
 
 # Details
 # -------
@@ -294,11 +357,11 @@ calc.stoich.basis <- function(alpha,subst=NA,constraints=list())
 
 
 calc.stoich.coef <- function(alpha,name,subst,subst.norm,nu.norm=1,
-                             constraints=list())
+                             constraints=list(),eps=1e-5)
 {
    # calculate basis of stoichiometric coefficients:
    
-   nu.basis <- calc.stoich.basis(alpha,c(subst.norm,subst),constraints)
+   nu.basis <- calc.stoich.basis(alpha,c(subst.norm,subst),constraints,eps)
    if ( is.na(nu.basis[1]) )
    {
       print("No process possible")

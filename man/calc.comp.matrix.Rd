@@ -33,7 +33,7 @@ Composition matrix of all substances (labelled columns) and mass fractions
 of elementary constituents (labelled rows).
 }
 \references{
-Reichert, P. and Schuwirt, N.,
+Reichert, P. and Schuwirth, N.,
 A generic framework for deriving process stoichiometry in environmental models,
 Environmental Modelling and Software, in review, 2010.
 }
@@ -50,7 +50,7 @@ subst.comp <-
                 charge = 1/14),   # chu/gNH4-N
        NO3  = c(O      = 3*16/14, # gO/gNO3-N
                 N      = 1,       # gN/gNO3-N
-                charge = 1/14),   # chu/gNO3-N
+                charge = -1/14),  # chu/gNO3-N
        HPO4 = c(O      = 4*16/31, # gO/gHPO4-P
                 H      = 1*1/31,  # gH/gHPO4-P
                 P      = 1,       # gP/gHPO4-P
