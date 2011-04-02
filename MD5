@@ -1,0 +1,12 @@
+64e656c4ac9ad5ec349249a53b384b88 *DESCRIPTION
+9fdfeb11f7ddba6f3aab9aaa6b1ac5dd *NAMESPACE
+bc0a3db298d5590115f6248a828e321f *R/stoichcalc.R
+7c3100a41ce914f631803a995ab21c7d *demo/00Index
+1971ddb3759b9e748ff62a301388bc57 *demo/stoichcalc_appendix.R
+5f2071cb44b1645d9de0b5d7f668a3a3 *demo/stoichcalc_example1.R
+83e0678c56bcf9a9eaf2e1dc8a4e6450 *demo/stoichcalc_example2.R
+6abc6c4c58dc901a2bc5efc6403aa5e1 *inst/CITATION
+9dffd86623dae1af7f4263a4df1b4c1f *man/calc.comp.matrix.Rd
+79378578304f9c5509a4a1c5cfb4d86c *man/calc.stoich.basis.Rd
+da42031e43e8c1550e07d8d6736dcc63 *man/calc.stoich.coef.Rd
+bdb6a3b7542a2101fb542f32f0a855fc *man/stoichcalc.Rd

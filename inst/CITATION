@@ -1,0 +1,21 @@
+citHeader("To cite package 'stoichcalc' in publications use:")
+
+citEntry(entry="Article",
+  title = "A generic framework for deriving process stoichiometry in
+    environmental models",
+  author = personList(as.person("Peter Reichert"), 
+                      as.person("Nele Schuwirth")),
+  journal =	"Environmental Modelling and Software",
+  volume = "25",
+  number = "10",
+  pages = "1241--1251",
+  year = "2010",
+  doi = "10.1016/j.envsoft.2010.03.002",
+  keywords = "Stoichiometric matrix, Stoichiometric coefficient,
+    Stoichiometric calculations, Ecological model, Environmental
+    model, Biological stoichiometry, Simulation software",
+  textVersion = paste("Peter Reichert and Nele Schuwirth (2010),
+    A generic framework for deriving process stoichiometry in
+    environmental models.  Environmental Modelling and Software 25(10),
+    1241-1251.  DOI 10.1016/j.envsoft.2010.03.002")
+)

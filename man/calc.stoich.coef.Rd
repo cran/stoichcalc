@@ -42,7 +42,7 @@ relative tolerance for checking ratios of stoichiometric coefficients
 }
 }
 \details{
-This is the key function of the library for the calculation of stoichiometric
+This is the key function of the package for the calculation of stoichiometric
 coefficients of individual processes. 
 The results for different processes can easily be bound to the comprehensive 
 stoichiometric matrix of all processes by using rbind.
@@ -58,7 +58,7 @@ substance names provided by the substance composition matrix alpha.
 \references{
 Reichert, P. and Schuwirth, N.,
 A generic framework for deriving process stoichiometry in environmental models,
-Environmental Modelling and Software, in review, 2010.
+Environmental Modelling and Software 25, 1241-1251, 2010.
 }
 \author{
 Peter Reichert <peter.reichert@gmx.ch>

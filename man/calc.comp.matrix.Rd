@@ -21,7 +21,7 @@ the corresponding elementary constituent.
 }
 \details{
 This function compiles the substance composition matrix used in the other
-functions of the STOICHCALC library. 
+functions of the \pkg{stoichcalc} package. 
 It can alternatively be composed manually or by a user-defined function. 
 The main advantage of the use of this function is that substance compositions 
 can be maintained in lists.
@@ -35,7 +35,7 @@ of elementary constituents (labelled rows).
 \references{
 Reichert, P. and Schuwirth, N.,
 A generic framework for deriving process stoichiometry in environmental models,
-Environmental Modelling and Software, in review, 2010.
+Environmental Modelling and Software 25, 1241-1251, 2010.
 }
 \author{
 Peter Reichert <peter.reichert@gmx.ch>

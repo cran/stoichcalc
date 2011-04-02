@@ -46,7 +46,7 @@ space.
 \references{
 Reichert, P. and Schuwirth, N.,
 A generic framework for deriving process stoichiometry in environmental models,
-Environmental Modelling and Software, in review, 2010.
+Environmental Modelling and Software 25, 1241-1251, 2010.
 }
 \author{
 Peter Reichert <peter.reichert@gmx.ch>
