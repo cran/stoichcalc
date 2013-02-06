@@ -2,13 +2,13 @@
 # STOICHCALC - R-Routines for Solving Stoichiometric Equations
 # ==============================================================================
 #
-# Version 1.1-1                Peter Reichert, Feb. 22, 2010 (reichert@eawag.ch)
+# Version 1.1-3                Peter Reichert, Feb. 06, 2013 (reichert@eawag.ch)
 # =============
 #
 # Literature: Peter Reichert and Nele Schuwirth
 #             A generic framework for deriving process stoichiometry 
 #             in environmental models
-#             submitted to Environmental Modelling and Software
+#             Environmental Modelling and Software 25, 1241-1251, 2010.
 #
 # ==============================================================================
 
@@ -24,7 +24,7 @@
 # Usage
 # -----
 
-# calc.comp.matrix(subst.comp)
+# calc.comp.matrix(subst.comp,verbose=TRUE)
 
 # Arguments
 # ---------
@@ -36,6 +36,7 @@
 #              ThOD) that characterize the composition of the substance. 
 #              Each element of these vectors must be labelled by the name of  
 #              the corresponding "elementary constituent".
+# verbose      indicator for whether or not to write basic information to the console
 
 # Details
 # -------
@@ -53,7 +54,7 @@
 # Composition matrix of all substances (labelled columns) and "mass" fractions
 # of "elementary constituents" (labelled rows)
 
-calc.comp.matrix <- function(subst.comp)
+calc.comp.matrix <- function(subst.comp,verbose=TRUE)
 {
    # check input:
    
@@ -94,10 +95,13 @@ calc.comp.matrix <- function(subst.comp)
    
    # print summary and return composition matrix:
    
-   print(paste("Composition matrix (",nrow(alpha),"x",ncol(alpha),
-               ") successfully constructed:",sep=""))
-   print(paste("el. const.:",paste(rownames(alpha),collapse=",")))
-   print(paste("substances:",paste(colnames(alpha),collapse=",")))
+   if ( verbose )
+   {
+      print(paste("Composition matrix (",nrow(alpha),"x",ncol(alpha),
+                  ") successfully constructed:",sep=""))
+      print(paste("el. const.:",paste(rownames(alpha),collapse=",")))
+      print(paste("substances:",paste(colnames(alpha),collapse=",")))
+   }
    return(alpha)
 }
 
@@ -117,7 +121,7 @@ calc.comp.matrix <- function(subst.comp)
 # Usage
 # -----
 
-# calc.stoich.basis(alpha,subst=NA,constraints=list(),eps=1e-5)
+# calc.stoich.basis(alpha,subst=NA,constraints=list(),eps=1e-5,verbose=TRUE)
 
 # Arguments
 # ---------
@@ -136,6 +140,7 @@ calc.comp.matrix <- function(subst.comp)
 # eps          relative tolerance for checking ratios of stoichiometric
 #              coefficients (only used for informing user about substance pairs
 #              with fixed stoichiometric ratio)
+# verbose      indicator for whether or not to write basic information to the console
 
 # Details
 # -------
@@ -154,7 +159,7 @@ calc.comp.matrix <- function(subst.comp)
 # space.
 
 
-calc.stoich.basis <- function(alpha,subst=NA,constraints=list(),eps=1e-5)
+calc.stoich.basis <- function(alpha,subst=NA,constraints=list(),eps=1e-5,verbose=TRUE)
 {
    # calculate reduced composition matrix:
    
@@ -233,11 +238,14 @@ calc.stoich.basis <- function(alpha,subst=NA,constraints=list(),eps=1e-5)
    
    # print summary and analyze structure of stoichiometric space:
 
-   dim <- nrow(basis.reduced)   
-   print(paste("Number of substances:                     ",ncol(alpha.reduced)))
-   print(paste("Number of elementary constituents:        ",nrow(alpha.reduced)))
-   print(paste("Number of constraints:                    ",length(constraints)))   
-   print(paste("Number of independent processes:          ",dim))
+   dim <- nrow(basis.reduced)  
+   if ( verbose )
+   {
+      print(paste("Number of substances:                     ",ncol(alpha.reduced)))
+      print(paste("Number of elementary constituents:        ",nrow(alpha.reduced)))
+      print(paste("Number of constraints:                    ",length(constraints)))   
+      print(paste("Number of independent processes:          ",dim))
+   }
    if ( dim > 1 )
    {
       print(paste("Number of required additional constraints:",dim-1))
@@ -312,7 +320,7 @@ calc.stoich.basis <- function(alpha,subst=NA,constraints=list(),eps=1e-5)
 # -----
 
 # calc.stoich.coef(alpha,name,subst,subst.norm,nu.norm=1,constraints=list(),
-#                   eps=1e-5)
+#                   eps=1e-5,verbose=TRUE)
 
 # Arguments
 # ---------
@@ -336,6 +344,7 @@ calc.stoich.basis <- function(alpha,subst=NA,constraints=list(),eps=1e-5)
 # eps          relative tolerance for checking ratios of stoichiometric
 #              coefficients (only used for informing user about substance pairs
 #              with fixed stoichiometric ratio)
+# verbose      indicator for whether or not to write basic information to the console
 
 # Details
 # -------
@@ -357,11 +366,11 @@ calc.stoich.basis <- function(alpha,subst=NA,constraints=list(),eps=1e-5)
 
 
 calc.stoich.coef <- function(alpha,name,subst,subst.norm,nu.norm=1,
-                             constraints=list(),eps=1e-5)
+                             constraints=list(),eps=1e-5,verbose=TRUE)
 {
    # calculate basis of stoichiometric coefficients:
    
-   nu.basis <- calc.stoich.basis(alpha,c(subst.norm,subst),constraints,eps)
+   nu.basis <- calc.stoich.basis(alpha,c(subst.norm,subst),constraints,eps,verbose)
    if ( is.na(nu.basis[1]) )
    {
       print("No process possible")
@@ -399,7 +408,7 @@ calc.stoich.coef <- function(alpha,name,subst,subst.norm,nu.norm=1,
    
    # print and return stoichiometry:
    
-   print("Stoichiometric coefficients successfully calculated.")
+   if ( verbose ) print("Stoichiometric coefficients successfully calculated.")
    return(nu)
 }
 

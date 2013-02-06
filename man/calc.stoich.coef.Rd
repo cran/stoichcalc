@@ -6,7 +6,7 @@ Calculate stoichiometric coefficients of a process from involved substances,
 their composition and constraints
 }
 \usage{
-calc.stoich.coef(alpha, name, subst, subst.norm, nu.norm = 1, constraints = list(), eps = 1e-5)
+calc.stoich.coef(alpha, name, subst, subst.norm, nu.norm = 1, constraints = list(), eps = 1e-5, verbose = TRUE)
 }
 \arguments{
   \item{alpha}{
@@ -40,6 +40,9 @@ elementary constituents.}
 relative tolerance for checking ratios of stoichiometric coefficients 
 (only used for informing user about substance pairs with fixed stoichiometric ratio)
 }
+  \item{verbose}{
+indicator for whether or not to write basic information to the console.
+}
 }
 \details{
 This is the key function of the package for the calculation of stoichiometric
@@ -61,7 +64,7 @@ A generic framework for deriving process stoichiometry in environmental models,
 Environmental Modelling and Software 25, 1241-1251, 2010.
 }
 \author{
-Peter Reichert <peter.reichert@gmx.ch>
+Peter Reichert <peter.reichert@eawag.ch>
 }
 
 \seealso{

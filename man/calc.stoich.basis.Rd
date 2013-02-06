@@ -6,16 +6,18 @@ Calculate the basis of the stoichiometry space that is compatible
 with mass balances of elementary constituents and additional constraints
 }
 \usage{
-calc.stoich.basis(alpha, subst = NA, constraints = list(), eps = 1e-5)
+calc.stoich.basis(alpha, subst = NA, constraints = list(), eps = 1e-5, verbose = TRUE)
 }
 \arguments{
   \item{alpha}{
 Substance composition matrix of all substances (labelled columns) 
 and mass fractions of elementary constituents (labelled rows). 
-Typically calculated by the function \code{\link{calc.comp.matrix}}.}
+Typically calculated by the function \code{\link{calc.comp.matrix}}.
+}
   \item{subst}{
 Character vector of names of substances to be used for analysis
-(this must be a subset of the column names of alpha).}
+(this must be a subset of the column names of alpha).
+}
   \item{constraints}{
 list of stoichiometric constraints in addition to mass conservation of
 elementary constituents. 
@@ -23,10 +25,14 @@ Each stoichiometric constraint must be stored as a vector containing the
 coefficients of the linear equation in elementary constituents that defines
 the constraint. 
 The elements of this vector must be labelled by the names of the corresponding
-elementary constituents.}
+elementary constituents.
+}
   \item{eps}{
 relative tolerance for checking ratios of stoichiometric coefficients 
 (only used for informing user about substance pairs with fixed stoichiometric ratio)
+}
+  \item{verbose}{
+indicator for whether or not to write basic information to the console.
 }
 }
 \details{
@@ -49,7 +55,7 @@ A generic framework for deriving process stoichiometry in environmental models,
 Environmental Modelling and Software 25, 1241-1251, 2010.
 }
 \author{
-Peter Reichert <peter.reichert@gmx.ch>
+Peter Reichert <peter.reichert@eawag.ch>
 }
 
 \seealso{

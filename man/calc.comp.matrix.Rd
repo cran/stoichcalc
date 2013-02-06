@@ -6,7 +6,7 @@ Construct substance composition matrix
 from list of substance composition vectors
 }
 \usage{
-calc.comp.matrix(subst.comp)
+calc.comp.matrix(subst.comp,verbose=TRUE)
 }
 \arguments{
   \item{subst.comp}{
@@ -17,6 +17,9 @@ constituents (typically chemical elements, charge or COD resp.
 ThOD) that characterize the composition of the substance. 
 Each element of these vectors must be labelled by the name of  
 the corresponding elementary constituent.
+}
+  \item{verbose}{
+indicator for whether or not to write basic information to the console.
 }
 }
 \details{
@@ -38,7 +41,7 @@ A generic framework for deriving process stoichiometry in environmental models,
 Environmental Modelling and Software 25, 1241-1251, 2010.
 }
 \author{
-Peter Reichert <peter.reichert@gmx.ch>
+Peter Reichert <peter.reichert@eawag.ch>
 }
 \seealso{
 \code{\link{calc.stoich.basis}}, \code{\link{calc.stoich.coef}}
