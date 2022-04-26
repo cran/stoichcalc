@@ -6,7 +6,8 @@ Calculate stoichiometric coefficients of a process from involved substances,
 their composition and constraints
 }
 \usage{
-calc.stoich.coef(alpha, name, subst, subst.norm, nu.norm = 1, constraints = list(), eps = 1e-5, verbose = TRUE)
+calc.stoich.coef(alpha, name, subst, subst.norm, nu.norm = 1, constraints = list(), 
+                 eps = 1e-5, verbose = TRUE)
 }
 \arguments{
   \item{alpha}{

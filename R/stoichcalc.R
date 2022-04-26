@@ -213,7 +213,7 @@ calc.stoich.basis <- function(alpha,subst=NA,constraints=list(),eps=1e-5,verbose
    # perform singular value decomposition:
    
    svd.res <- svd(a)
-   
+
    # extract basis of null space:
    
    ut <- t(svd.res$u)
