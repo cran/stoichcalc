@@ -1,0 +1,47 @@
+==========================================
+Modification history of stoichcalc package
+==========================================
+
+
+Changes from 1.1-4 to 1.1-5:
+----------------------------
+
+- updated email address
+
+
+Changes from 1.1-3 to 1.1-4:
+----------------------------
+
+- matching line length limit in Rd files
+
+
+Changes from 1.1-2 to 1.1-3:
+----------------------------
+
+- Argument "verbose" added to "calc.stoich.basis" and "calc.stoich.coef"
+
+- NAMESPACE added
+
+
+Changes from 1.1-1 to 1.1-2:
+----------------------------
+
+- Citations directly on help pages / reference updated
+
+- New version number (in DESCRIPTION and stoichcalc.Rd) 1.1-2
+
+- New file /inst/CITATION
+
+- In help files "library" replaced by "package"
+
+
+Changes from 1.1-0 to 1.1-1:
+----------------------------
+
+- Spelling in reference corrected to Schuwirth
+
+- Charge of NO3- corrected in examples
+
+- Analysis of structure of stoichiometric space added
+
+

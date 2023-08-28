@@ -55,7 +55,7 @@ A generic framework for deriving process stoichiometry in environmental models,
 Environmental Modelling and Software 25, 1241-1251, 2010.
 }
 \author{
-Peter Reichert <peter.reichert@eawag.ch>
+Peter Reichert <peter.reichert@emeriti.eawag.ch>
 }
 
 \seealso{

@@ -1,10 +1,10 @@
 citHeader("To cite package 'stoichcalc' in publications use:")
 
-citEntry(entry="Article",
+bibentry(bibtype="Article",
   title = "A generic framework for deriving process stoichiometry in
     environmental models",
-  author = personList(as.person("Peter Reichert"), 
-                      as.person("Nele Schuwirth")),
+  author = c(person("Peter","Reichert"), 
+             person("Nele","Schuwirth")),
   journal =	"Environmental Modelling and Software",
   volume = "25",
   number = "10",

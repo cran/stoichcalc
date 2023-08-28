@@ -18,8 +18,8 @@ if process stoichiometry is unique
 \tabular{ll}{
 Package: \tab stoichcalc\cr
 Type: \tab Package\cr
-Version: \tab 1.1-4\cr
-Date: \tab 2022-04-20\cr
+Version: \tab 1.1-5\cr
+Date: \tab 2023-08-28\cr
 License: \tab GPL >= 2\cr
 LazyLoad: \tab yes\cr
 }
@@ -34,7 +34,7 @@ and additional constraints,
 of a process from involved substances, their composition and constraints.
 }
 \author{
-Peter Reichert <peter.reichert@eawag.ch>
+Peter Reichert <peter.reichert@emeriti.eawag.ch>
 }
 \references{
 Reichert, P. and Schuwirth, N., 

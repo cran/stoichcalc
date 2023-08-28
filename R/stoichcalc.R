@@ -2,7 +2,7 @@
 # STOICHCALC - R-Routines for Solving Stoichiometric Equations
 # ==============================================================================
 #
-# Version 1.1-3                Peter Reichert, Feb. 06, 2013 (reichert@eawag.ch)
+# Version 1.1-3                Peter Reichert, Feb. 06, 2013 (peter.reichert@emeriti.eawag.ch)
 # =============
 #
 # Literature: Peter Reichert and Nele Schuwirth
